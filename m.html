@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>MU Store - رجالي</title>
+    <link rel="stylesheet" href="s.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>🛍️ MU Store - رجالي</h2>
+    <div>
+        <a href="index.html">الرئيسية</a>
+        <a href="w.html">نسائي</a>
+    </div>
+</div>
+
+<div id="products"></div>
+
+<h2>🛒 السلة</h2>
+<div id="cart"></div>
+<h3 id="total">المجموع: 0$</h3>
+<button onclick="clearCart()">🗑 حذف الكل</button>
+
+<script>
+const products = [
+    {name:"تيشيرت", price:20, image:"t.jpg"},
+    {name:"جاكيت", price:50, image:"j.jpg"},
+    {name:"هودي", price:35, image:"h.jpg"},
+    {name:"بنطلون", price:40, image:"je.jpg"}
+];
+
+let cart = [];
+
+function displayProducts() {
+    let container = document.getElementById("products");
+    container.innerHTML = "";
+
+    products.forEach(p => {
+        container.innerHTML += `
+        <div class="product">
+            <img src="${p.image}">
+            <h3>${p.name}</h3>
+            <p>${p.price}$</p>
+            <button onclick='addToCart(${JSON.stringify(p)})'>إضافة للسلة</button>
+        </div>`;
+    });
+}
+
+function addToCart(p){
+    cart.push(p);
+    displayCart();
+}
+
+function displayCart(){
+    let div = document.getElementById("cart");
+    div.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item,i)=>{
+        total += item.price;
+
+        div.innerHTML += `
+        <p>
+            ${item.name} - ${item.price}$ 
+            <button onclick="removeItem(${i})">❌ حذف</button>
+        </p>`;
+    });
+
+    document.getElementById("total").innerText = "المجموع: "+total+"$";
+}
+function removeItem(i){
+    cart.splice(i,1);
+    displayCart();
+}
+function clearCart(){
+    cart = [];
+    displayCart();
+}
+
+
+
+displayProducts();
+</script>
+
+</body>
+</html>
